@@ -65,19 +65,11 @@ melted_otus$NAME<-paste(melted_otus$EXTRACTION, melted_otus$SPECIES,melted_otus$
 melted_otus<-subset(melted_otus,BLANK_TYPE=="4.not_blank")
 
 
-######################################
-KOLORY<-c("darkolivegreen1","darkorange3","chartreuse4","#777777","#555555","#ff00ff")
-
 THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.border=element_rect(colour = "#ffffff", fill=NA, size=0.5), strip.background = element_blank(),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),strip.text   = element_text(size=0),legend.title=element_blank() )
-###############################################################
 
 
 library(RColorBrewer)
-n <- 40
-color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
-
-
-col_vector<-c("#dadada",brewer.pal(11, "Paired") )#Paired
+col_vector<-c("#dadada",brewer.pal(11, "Paired") )
 
 
 dev.new()
