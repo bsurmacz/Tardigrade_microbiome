@@ -97,11 +97,10 @@ combine_OTU_files.py otu_table.txt otus.tax otus.fasta
 
 
 
+#DECONTAMINATION
 
 
-
-
-
+python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_1.txt SPIKEIN otus.tax 20 0 100
 
 
 
