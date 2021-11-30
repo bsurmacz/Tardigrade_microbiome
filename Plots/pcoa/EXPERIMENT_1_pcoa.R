@@ -85,6 +85,11 @@ EXP1_scores_decontaminated$species<-t( samples[3, paste0(rownames(EXP1_scores_de
 detailed_EXP1_scores_decontaminated$species<-t( samples[3, paste0(rownames(detailed_EXP1_scores_decontaminated))])
 detailed_EXP1_scores_full$species<-t( samples[3, paste0(rownames(detailed_EXP1_scores_full))])
 
+detailed_EXP1_scores_decontaminated$extraction<-t( samples[2, paste0(rownames(detailed_EXP1_scores_decontaminated))])
+detailed_EXP1_scores_full$extraction<-t( samples[2, paste0(rownames(detailed_EXP1_scores_full))])
+
+
+
 cursory_EXP1_scores_decontaminated$species<-t( samples[3, paste0(rownames(cursory_EXP1_scores_decontaminated))])
 cursory_EXP1_scores_full$species<-t( samples[3, paste0(rownames(cursory_EXP1_scores_full))])
 
@@ -103,12 +108,18 @@ library(dplyr)
  
 
 #by species
-pcoa_plot<-function(data,Title,scale_shape,colors){
+pcoa_plot<-function(data,Title,scale_shape,colors,extraction){
 	hulls<-data %>%group_by(species) %>% slice(chull(NMDS1,NMDS2))
-	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data) + geom_point(data=data,size=3)+ geom_polygon(data =hulls, aes(group=species,fill=species), alpha = 0.2)+scale_fill_manual(values=colors)+theme_bw()+scale_color_manual(values=colors)+scale_shape_manual(values=scale_shape)+labs(title=Title)
+
+	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=3)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)+new_scale_fill() +geom_point(shape = 21, aes(x=NMDS1,y=NMDS2,fill=extraction),size=9,alpha=0.1)+scale_fill_manual(values=c("red","blue","gray"))
+	
 return(plot_data)
 }
+
+
+
 copy_cursory_EXP1_scores_full<-cursory_EXP1_scores_full
+
 
 
 cursory_EXP1_scores_full$species[cursory_EXP1_scores_full$species=="algae"]<-"_algae"
@@ -120,6 +131,18 @@ detailed_EXP1_scores_full$species[detailed_EXP1_scores_full$species=="blank"]<-"
 detailed_EXP1_scores_full$species[detailed_EXP1_scores_full$species=="rotifers"]<-"_rotifers"
 
 
+
+detailed_EXP1_scores_decontaminated$extraction[detailed_EXP1_scores_decontaminated$extraction==""]<-"3_"
+detailed_EXP1_scores_decontaminated$extraction[detailed_EXP1_scores_decontaminated$extraction=="Chelex"]<-"1.Chelex"
+detailed_EXP1_scores_decontaminated$extraction[detailed_EXP1_scores_decontaminated$extraction=="beads"]<-"2.beads"
+
+
+detailed_EXP1_scores_full$extraction[detailed_EXP1_scores_full$extraction==""]<-"3_"
+detailed_EXP1_scores_full$extraction[detailed_EXP1_scores_full$extraction=="Chelex"]<-"1.Chelex"
+detailed_EXP1_scores_full$extraction[detailed_EXP1_scores_full$extraction=="beads"]<-"2.beads"
+
+
+
 exp1_a_full<-pcoa_plot(cursory_EXP1_scores_full,"Experiment 1a: raw data",c(16, 15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector))
 exp1_a_decontaminated<-pcoa_plot(cursory_EXP1_scores_decontaminated,"Experiment 1a: decontaminated",c(16, 1),col_vector)
 
@@ -127,7 +150,9 @@ exp1_a_decontaminated<-pcoa_plot(cursory_EXP1_scores_decontaminated,"Experiment 
 ##
 exp1_b_full<-pcoa_plot(detailed_EXP1_scores_full,"Experiment 1b: raw data",c(16, 15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector))
 exp1_b_decontaminated<-pcoa_plot(detailed_EXP1_scores_decontaminated,"Experiment 1b: decontaminated",c(16, 1),col_vector)
+ggarrange(exp1_b_full, exp1_b_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
 
+detailed_EXP1_scores_full$extraction
 
 dev.new()
 svg("PCoA_exp1a.svg",width=20,height=9)
