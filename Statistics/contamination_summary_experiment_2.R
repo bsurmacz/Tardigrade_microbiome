@@ -2,8 +2,8 @@ library(reshape2)
 library(ggplot2)
 library(dplyr)
 
-samples<- read.csv("../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=T)
-Statistic_table<- read.csv("../EXPERIMENT1/Results/Statistics_table.txt",sep="\t",header=T,row.names=1,dec=".")
+samples<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T)
+Statistic_table<- read.csv("../EXPERIMENT2/Results/Statistics_table.txt",sep="\t",header=T,row.names=1,dec=".")
 
 
 percentages<-Statistic_table[c(12,22,21,13,14,17),  ] 
@@ -31,4 +31,4 @@ OUT
 
 
 
-write.table(OUT,file="summary_EXPERIMENT1.csv")
+write.table(OUT,file="summary_EXPERIMENT2.csv")
