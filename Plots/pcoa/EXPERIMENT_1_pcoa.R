@@ -77,7 +77,7 @@ n <- 52
 color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 set.seed(117)
 col_vector<-sample(color, n)
-col_vector<-c("yellow","green","#000099",col_vector)
+col_vector<-c("orange","green","#ca8b44",col_vector)
 
 #########
 
