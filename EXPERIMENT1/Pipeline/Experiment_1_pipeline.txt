@@ -83,8 +83,6 @@ sed -i 's/[dpcofgs]\://g' otus.tax
 
 
 ### combine various zOTU-related tables using Piotr's two shiny new scripts :)
-combine_zOTU_files.py zotu_table.txt zotus.tax zotus.fasta zotu_otu_relationships.txt
-combine_OTU_files.py otu_table.txt otus.tax otus.fasta
 
 
 
@@ -92,22 +90,28 @@ combine_OTU_files.py otu_table.txt otus.tax otus.fasta
 
 
 
-### Look at the output files --- zotus_table_expanded.txt and otus_table_expanded.txt --- and enjoy!
+
+combine_zOTU_files.py zotu_table_experiment_1.txt ../../MERGED/zotus.tax ../../MERGED/zotus.fasta ../../MERGED/zotu_otu_relationships.txt
+
+
+combine_OTU_files.py otu_table_experiment_1.txt ../../MERGED/otus.tax ../../MERGED/otus.fasta
+
 
 
 
 
 #DECONTAMINATION
 
+python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_1.txt SPIKEIN ../../MERGED/otus.tax 10 0 100
 
-python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_1.txt SPIKEIN otus.tax 10 0 100
-
-
-
+python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_2.txt SPIKEIN ../../MERGED/otus.tax 10 0 100
 
 
 
 
+#xep2
+combine_zOTU_files.py zotu_table_experiment_2.txt ../../MERGED/zotus.tax ../../MERGED/zotus.fasta ../../MERGED/zotu_otu_relationships.txt
+combine_OTU_files.py otu_table_experiment_2.txt ../../MERGED/otus.tax ../../MERGED/otus.fasta
 
 
 

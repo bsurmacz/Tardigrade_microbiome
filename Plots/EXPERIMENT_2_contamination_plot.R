@@ -2,7 +2,7 @@ library(reshape2)
 library(ggplot2)
 
 samples<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T)
-Statistic_table<- read.csv("../EXPERIMENT2/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
+Statistic_table<- read.csv("../EXPERIMENT2/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
 
 percentages<-Statistic_table[c(12,22,21,13,14,17),  ] 
 melted<-melt(t(percentages))
