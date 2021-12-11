@@ -52,6 +52,11 @@ set.seed(117)
 col_vector<-sample(color, n)
 col_vector<-c("orange","green","#ca8b44",col_vector)
 
+
+#col_vector<-c("orange","green","#ca8b44",brewer.pal(n = 12, name = "Set3"))
+
+
+
 #########
 
 EXP2_scores_decontaminated$species<-t( samples[3, paste0(rownames(EXP2_scores_decontaminated))])
@@ -71,7 +76,7 @@ library(dplyr)
 pcoa_plot<-function(data,Title,scale_shape,colors,extraction){
 	hulls<-data %>%group_by(species) %>% slice(chull(NMDS1,NMDS2))
 
-	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=3)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)
+	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=5)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)
 	if(extraction){
 	plot_data<-plot_data+new_scale_fill() +geom_point(shape = 21, aes(x=NMDS1,y=NMDS2,fill=extraction),size=9,alpha=0.08)+scale_fill_manual(values=c("red","blue","gray"))
 	}
@@ -101,11 +106,28 @@ EXP2_scores_decontaminated$extraction[EXP2_scores_decontaminated$extraction=="Ch
 EXP2_scores_decontaminated$extraction[EXP2_scores_decontaminated$extraction=="beads"]<-"2.beads"
 
 
+EXP2_scores_full$type[EXP2_scores_full$type %in% c("5","20","50")]<-"20"
+EXP2_scores_decontaminated$type[EXP2_scores_decontaminated$type %in% c("5","20","50")]<-"20"
 
-exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,20,16, 1,17,3,5),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
-exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19,20,18, 1),col_vector,FALSE)
 
 
+exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
+exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),col_vector,FALSE)
+
+
+col_vector
+set.seed(117)
+col_vector<-sample(color, n)
+save<-col_vector[1:3]
+col_vector[3]<-save[1]
+col_vector[4]<-save[2]
+col_vector[4]<-save[3]
+col_vector[1]<-"pink"
+col_vector[2]<-"blue4"
+col_vector[3]<-"salmon2"
+
+exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
+exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),col_vector,FALSE)
 ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
 
 

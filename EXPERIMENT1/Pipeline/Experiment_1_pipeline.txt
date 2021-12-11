@@ -104,14 +104,25 @@ combine_OTU_files.py otu_table_experiment_1.txt ../../MERGED/otus.tax ../../MERG
 
 python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_1.txt SPIKEIN ../../MERGED/otus.tax 10 0 100
 
+
+
+
+
+
+#EXP2
+combine_zOTU_files.py zotu_table_experiment_2.txt ../../MERGED/zotus.tax ../../MERGED/zotus.fasta ../../MERGED/zotu_otu_relationships.txt
+combine_OTU_files.py otu_table_experiment_2.txt ../../MERGED/otus.tax ../../MERGED/otus.fasta
 python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_2.txt SPIKEIN ../../MERGED/otus.tax 10 0 100
 
 
 
+#EXP3
+combine_zOTU_files.py zotu_table_experiment_3.txt ../../MERGED/zotus.tax ../../MERGED/zotus.fasta ../../MERGED/zotu_otu_relationships.txt
+combine_OTU_files.py otu_table_experiment_3.txt ../../MERGED/otus.tax ../../MERGED/otus.fasta
+python3 decontaminate.py zotu_table_expanded.txt BLANK_LIST_EXPERIMENT_3.txt SPIKEIN ../../MERGED/otus.tax 10 0 100
 
-#xep2
-combine_zOTU_files.py zotu_table_experiment_2.txt ../../MERGED/zotus.tax ../../MERGED/zotus.fasta ../../MERGED/zotu_otu_relationships.txt
-combine_OTU_files.py otu_table_experiment_2.txt ../../MERGED/otus.tax ../../MERGED/otus.fasta
+
+
 
 
 

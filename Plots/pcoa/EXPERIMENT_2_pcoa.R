@@ -71,7 +71,7 @@ library(dplyr)
 pcoa_plot<-function(data,Title,scale_shape,colors,extraction){
 	hulls<-data %>%group_by(species) %>% slice(chull(NMDS1,NMDS2))
 
-	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=3)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)
+	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=6)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)
 	if(extraction){
 	plot_data<-plot_data+new_scale_fill() +geom_point(shape = 21, aes(x=NMDS1,y=NMDS2,fill=extraction),size=9,alpha=0.08)+scale_fill_manual(values=c("red","blue","gray"))
 	}
@@ -86,6 +86,12 @@ EXP2_scores_full$species[EXP2_scores_full$species=="blank"]<-"_blank"
 EXP2_scores_full$species[EXP2_scores_full$species=="rotifers"]<-"_rotifers"
 EXP2_scores_full$species[EXP2_scores_full$species=="ludwik"]<-"_blank"
 EXP2_scores_full$species[EXP2_scores_full$species=="zywiec"]<-"_blank"
+
+
+EXP2_scores_full$type[EXP2_scores_full$type=="zywiec"]<-"blank"
+EXP2_scores_full$type[EXP2_scores_full$type=="ludwik"]<-"blank"
+EXP2_scores_full$type[EXP2_scores_full$type=="ludwik"]<-"blank"
+
 
 #EXP2_scores_decontaminated$species[EXP2_scores_decontaminated$species=="algae"]<-"_algae"
 #EXP2_scores_decontaminated$species[EXP2_scores_decontaminated$species=="blank"]<-"_blank"
@@ -102,8 +108,10 @@ EXP2_scores_decontaminated$extraction[EXP2_scores_decontaminated$extraction=="be
 
 
 
-exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 2: raw data",c(19,20, 15,4,1,17,3,5),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
-exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 2: decontaminated",c(19,20, 1),col_vector,FALSE)
+exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 2: raw data",c(20,19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
+exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 2: decontaminated",c(20,19, 1),col_vector,FALSE)
+
+
 
 
 ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
