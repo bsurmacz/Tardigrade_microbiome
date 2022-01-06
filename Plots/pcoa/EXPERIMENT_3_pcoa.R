@@ -115,17 +115,15 @@ exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c
 exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),col_vector,FALSE)
 
 
-col_vector
 set.seed(117)
 col_vector<-sample(color, n)
-save<-col_vector[1:3]
-col_vector[3]<-save[1]
-col_vector[4]<-save[2]
-col_vector[4]<-save[3]
-col_vector[1]<-"pink"
-col_vector[2]<-"blue4"
-col_vector[3]<-"salmon2"
 
+col_vector[3]<-"orange"
+col_vector[4]<-"green"
+col_vector[8]<-"#ca8b44"
+col_vector[9]<-"firebrick1"
+
+col_vector[2]<-"violet"
 exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
 exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),col_vector,FALSE)
 ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
