@@ -50,7 +50,7 @@ samples_experiment_2_temp<-samples_experiment_2
 colnames(quant_experiment_2)<-"quant"
 rownames(samples_experiment_2_temp)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
 samples_experiment_2_temp<-t(samples_experiment_2_temp)
-samples_experiment_2_temp[,"SAMPLE"]<- rownames(samples_experiment_2)_temp
+samples_experiment_2_temp[,"SAMPLE"]<- rownames(samples_experiment_2_temp)
 samples_experiment_2_temp
 q_experiment_2<-as.data.frame(cbind(samples_experiment_2_temp,quant_experiment_2))
 q_experiment_2$NAME <- paste0(q_experiment_2$NAME,q_experiment_2$SAMPLE)
@@ -68,6 +68,8 @@ q_experiment_2$quant<-as.numeric(as.character(q_experiment_2$quant))
 
 q_experiment_2$quant[q_experiment_2$quant==Inf]<-4000
 q_experiment_2$quant[q_experiment_2$quant>3000]<-0
+
+q_experiment_2[q_experiment_2$EXTRACTION=="beads",]$quant <-  5* q_experiment_2[q_experiment_2$EXTRACTION=="beads",]$quant
 
 Q_PLOT_2<-ggplot( q_experiment_2,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
 #Q_PLOT_2
@@ -102,8 +104,11 @@ q_experiment_3$quant<-as.numeric(as.character(q_experiment_3$quant))
 q_experiment_3$quant[q_experiment_3$quant==Inf]<-4000
 q_experiment_3$quant[q_experiment_3$quant>3000]<-0
 
+
+q_experiment_3[q_experiment_3$EXTRACTION=="beads",]$quant <-  5* q_experiment_3[q_experiment_3$EXTRACTION=="beads",]$quant
+
 Q_PLOT_3<-ggplot( q_experiment_3,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
-#Q_PLOT_3
+Q_PLOT_3
 
 ###################################
 
