@@ -1,10 +1,54 @@
 library(reshape2)
 library(ggplot2)
-	library(RColorBrewer)
+library(RColorBrewer)
+library(ggpubr)
+library(gplots)
+
 THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.border=element_rect(colour = "#ffffff", fill=NA, size=0.5), strip.background = element_blank(),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),strip.text   = element_text(size=0),legend.title=element_blank() )
 
+samples_experiment_2<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T)
+
+samples<-samples_experiment_2
+otus_in<-otus_experiment_2
+
+
+HEATMAP<-function(samples,otus_in)
+	{
+	N_col_to_remove=4
+	X<-otus_in
+	if(N_col_to_remove>0){info<-X[1:N_col_to_remove] }
+	if(N_col_to_remove>0){X<-X[-c(1:N_col_to_remove)] }
+	X<-apply(X, 2, function(x){100*x/max(1,sum(x))} )
+	#out<-cbind(info,X)
+	otus<-X
+	otus<-otus[, samples[4,colnames(otus)]==""]
+	samples_ch<-apply(samples,2,as.character)
+	rownames(samples_ch)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
+	with_replicates<-samples_ch["REPLICATE",colnames(otus)] %in% c("A","B","C")
+
+	ORDER<-order(samples_ch["EXTRACTION",colnames(otus)], t(with_replicates),
+	samples_ch["BLANK_TYPE",colnames(otus)],
+	samples_ch["SPECIES",colnames(otus)],
+	samples_ch["REPLICATE",colnames(otus)],
+	samples_ch["N",colnames(otus)],
+	samples_ch["SAMPLE",colnames(otus)],
+	samples_ch["NAME",colnames(otus)]  )
+
+	otus<-otus[ ,ORDER ]
+	otus<-otus[ rev(order(rowSums(otus)) ), ]
+	otus<-otus[1:20,]
+	otus<-otus[order(as.numeric(gsub("[^0-9.-]", "", rownames(otus)))),]
+
+	#kolory<-colorRampPalette(brewer.pal(9,"Blues"))(100)
+	kolory<- colorRampPalette(c("#ffffff","#0000a0","#000090","#000060"))(n = 100)
 	
-	
+	HEATMAP<-heatmap.2(as.matrix(otus),Rowv=F,Colv=F,dendrogram="none",trace="none",density.info="none",col=kolory,margins=c(14,6),key=T,scale="none",breaks = seq(0,100, length.out = 101) )
+	return(HEATMAP)
+	}
+
+
+
+		
 samples_experiment_1<- read.csv("../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=T)
 otus_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/Decontaminated_OTU_Table.txt",sep="\t", header=T,row.names=1)
 Statistic_table_experiment_1<- read.csv("../EXPERIMENT1/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
@@ -16,14 +60,6 @@ samples_experiment_1<-samples_experiment_1[,!colnames(samples_experiment_1) %in%
 otus_experiment_1<-otus_experiment_1[,!colnames(otus_experiment_1) %in% excluded_experiment1 ]
 otus_full_experiment_1<-otus_full_experiment_1[,!colnames(otus_full_experiment_1) %in% excluded_experiment1 ]
 Statistic_table_experiment_1<-Statistic_table_experiment_1[,!colnames(Statistic_table_experiment_1) %in% excluded_experiment1 ]
-
-max(otus_full_experiment_1["EXPERIMENT_1_T_PT_056_1"])
-max(otus_experiment_1["EXPERIMENT_1_T_PT_056_1"])
-
-colnames(otus_experiment_1)[1:10]
-
-colnames(otus_full_experiment_1)[1:10]
-colSums(otus_experiment_1[-c(1:4)]) 
 
 
 samples_experiment_2<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T)
@@ -38,83 +74,34 @@ otus_full_experiment_3<-read.csv("../EXPERIMENT3/RENAMED/Results/otu_table_exper
 Statistic_table_experiment_3<- read.csv("../EXPERIMENT3/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
 
 
+
 ############################# QUANTIFICATION PLOTS
-number_of_spikein_copies<- 1#000
 
-quant_experiment_2 <- t(Statistic_table_experiment_2["Symbionts_reads",]/(Statistic_table_experiment_2["Extraction_Spikeins_reads",]+0))
-
-cbind(t(Statistic_table_experiment_3["Symbionts_reads",]),t((Statistic_table_experiment_3["Extraction_Spikeins_reads",]+0)), t(Statistic_table_experiment_3["Symbionts_reads",]/(Statistic_table_experiment_3["Extraction_Spikeins_reads",]+0)))
-
-
-samples_experiment_2_temp<-samples_experiment_2
-colnames(quant_experiment_2)<-"quant"
-rownames(samples_experiment_2_temp)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
-samples_experiment_2_temp<-t(samples_experiment_2_temp)
-samples_experiment_2_temp[,"SAMPLE"]<- rownames(samples_experiment_2_temp)
-samples_experiment_2_temp
-q_experiment_2<-as.data.frame(cbind(samples_experiment_2_temp,quant_experiment_2))
-q_experiment_2$NAME <- paste0(q_experiment_2$NAME,q_experiment_2$SAMPLE)
-q_experiment_2$WITH_REPLICATES<-q_experiment_2$REPLICATE %in% c("A","B","C")
-
-q_experiment_2$BLANK_TYPE<-as.character(q_experiment_2$BLANK_TYPE)
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE=="blank"]<-"0.blank"
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE=="ludwik"]<-"1.ludwik"
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE=="zywiec"]<-"1.zywiec"
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE=="algae"]<-"2.algae"
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE=="rotifers"]<-"3.algae"
-q_experiment_2$BLANK_TYPE[q_experiment_2$BLANK_TYPE==""]<-"4.not_blank"
-
-q_experiment_2$quant<-as.numeric(as.character(q_experiment_2$quant))
-
-q_experiment_2$quant[q_experiment_2$quant==Inf]<-4000
-q_experiment_2$quant[q_experiment_2$quant>3000]<-0
-
-q_experiment_2[q_experiment_2$EXTRACTION=="beads",]$quant <-  5* q_experiment_2[q_experiment_2$EXTRACTION=="beads",]$quant
-
-Q_PLOT_2<-ggplot( q_experiment_2,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
-#Q_PLOT_2
-
-
-#############################3
-samples_experiment_3_temp<-samples_experiment_3
-
-Statistic_table_experiment_3<- read.csv("../EXPERIMENT3/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
-quant_experiment_3 <- t(Statistic_table_experiment_3["Symbionts_reads",]/(Statistic_table_experiment_3["Extraction_Spikeins_reads",]+0))
-colnames(quant_experiment_3)<-"quant"
-rownames(samples_experiment_3_temp)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
-samples_experiment_3_temp<-t(samples_experiment_3_temp)
-samples_experiment_3_temp[,"SAMPLE"]<- rownames(samples_experiment_3_temp)
-
-q_experiment_3<-as.data.frame(cbind(samples_experiment_3_temp,quant_experiment_3))
-
-q_experiment_3$NAME <- paste0(q_experiment_3$NAME,q_experiment_3$SAMPLE)
-q_experiment_3$WITH_REPLICATES<-q_experiment_3$REPLICATE %in% c("A","B","C")
-
-q_experiment_3$BLANK_TYPE<-as.character(q_experiment_3$BLANK_TYPE)
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE=="blank"]<-"0.blank"
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE=="ludwik"]<-"1.ludwik"
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE=="zywiec"]<-"1.zywiec"
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE=="algae"]<-"2.algae"
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE=="rotifers"]<-"3.algae"
-q_experiment_3$BLANK_TYPE[q_experiment_3$BLANK_TYPE==""]<-"4.not_blank"
-
-
-q_experiment_3$quant<-as.numeric(as.character(q_experiment_3$quant))
-
-q_experiment_3$quant[q_experiment_3$quant==Inf]<-4000
-q_experiment_3$quant[q_experiment_3$quant>3000]<-0
-
-
-q_experiment_3[q_experiment_3$EXTRACTION=="beads",]$quant <-  5* q_experiment_3[q_experiment_3$EXTRACTION=="beads",]$quant
-
-Q_PLOT_3<-ggplot( q_experiment_3,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
-Q_PLOT_3
-
-###################################
-
-
-
-
+QUANTIFICATION_PLOT<-function(samples,Statistic_table){
+	number_of_spikein_copies<- 1000
+	quant <- t(Statistic_table["Symbionts_reads",]/(Statistic_table["Extraction_Spikeins_reads",]))
+	colnames(quant)<-"quant"
+	rownames(samples)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
+	samples<-t(samples)
+	samples[,"SAMPLE"]<- rownames(samples)
+	q<-as.data.frame(cbind(samples,quant))
+	q$NAME <- paste0(q$NAME,q$SAMPLE)
+	q$WITH_REPLICATES<-q$REPLICATE %in% c("A","B","C")
+	q$BLANK_TYPE<-as.character(q$BLANK_TYPE)
+	q$BLANK_TYPE[q$BLANK_TYPE=="blank"]<-"0.blank"
+	q$BLANK_TYPE[q$BLANK_TYPE=="ludwik"]<-"1.ludwik"
+	q$BLANK_TYPE[q$BLANK_TYPE=="zywiec"]<-"1.zywiec"
+	q$BLANK_TYPE[q$BLANK_TYPE=="algae"]<-"2.algae"
+	q$BLANK_TYPE[q$BLANK_TYPE=="rotifers"]<-"3.algae"
+	q$BLANK_TYPE[q$BLANK_TYPE==""]<-"4.not_blank"
+	q$quant<-as.numeric(as.character(q$quant))
+	q$quant[q$quant==Inf]<-4000
+	q$quant[q$quant>3000]<-0
+	q[q$EXTRACTION=="beads",]$quant <-  5* q[q$EXTRACTION=="beads",]$quant  # in SPRIbeads extraction - spikein was added to 0.2 of sample
+	q$EXTRACTION<-q$EXTRACTION*number_of_spikein_copies
+	PLOT<-ggplot( q,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
+	return(PLOT)
+}
 
 
 ####
@@ -150,7 +137,7 @@ OTUS_TO_SHOW<-function(otus,otus_full,N_mean_otus,N_mean_full,N_max_otus,N_max_f
 OTU_PLOT<-function(otus,N_col_to_remove,nonblanks_only,samples,otus_to_show){
 
 	rownames(otus)<-tolower(rownames(otus))
-#TO RELATIVE
+	#TO RELATIVE
 	X<-otus
 	if(N_col_to_remove>0){info<-X[1:N_col_to_remove] }
 	if(N_col_to_remove>0){X<-X[-c(1:N_col_to_remove)] }
@@ -282,7 +269,6 @@ return (OUTPUT_PLOT)
 
 ####################################################
 
-library(ggpubr)
 
 #		otus,otus_full,N_mean_otus,N_mean_full,N_max_otus,N_max_full
 
@@ -311,10 +297,23 @@ CONTAMINATION_PLOT_experiment_1<-CONTAMINATION_PLOT(Statistic_table_experiment_1
 CONTAMINATION_PLOT_experiment_2<-CONTAMINATION_PLOT(Statistic_table_experiment_2,samples_experiment_2)
 CONTAMINATION_PLOT_experiment_3<-CONTAMINATION_PLOT(Statistic_table_experiment_3,samples_experiment_3)
 
+Q_PLOT_2<-QUANTIFICATION_PLOT(samples_experiment_2, Statistic_table_experiment_2)
+Q_PLOT_3<-QUANTIFICATION_PLOT(samples_experiment_3, Statistic_table_experiment_3)
 
-print(otus_to_show_1)
-print(otus_to_show_2)
-print(otus_to_show_3)
+HEATMAP_EXP2<-HEATMAP(samples_experiment_2,otus_experiment_2)
+HEATMAP_EXP3<-HEATMAP(samples_experiment_3,otus_experiment_3)
+
+
+dev.new()
+svg("HEATMAP_EXP2.svg",width=40, height=18)
+HEATMAP(samples_experiment_2,otus_experiment_2)
+dev.off()
+
+dev.new()
+svg("HEATMAP_EXP3.svg",width=40, height=18)
+HEATMAP(samples_experiment_3,otus_experiment_3)
+dev.off()
+
 
 dev.new()
 svg("EXPERIMENT_1_otus.svg",width=20, height=26)
