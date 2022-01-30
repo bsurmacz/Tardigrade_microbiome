@@ -31,9 +31,13 @@ otus<-otus[1:10,]
 library(RColorBrewer)
 kolory<-colorRampPalette(brewer.pal(9,"Blues"))(100)
     
-#kolory<- colorRampPalette(c("black","red","yellow","green"))(n = 100)
+
+heatmap.2(as.matrix(otus),Rowv=F,Colv=F,dendrogram="none",trace="none",density.info="none",col=kolory,margins=c(14,6),key=T,scale="none",breaks = seq(0,1, length.out = 101) )
+
+
 
 svg("EXPERIMENT_1_heatmap.svg",width=40,height=20)
 heatmap.2(as.matrix(otus),Rowv=F,Colv=F,dendrogram="none",trace="none",density.info="none",col=kolory,margins=c(14,6),key=T,scale="none",breaks = seq(0,1, length.out = 101) )
 dev.off()
 
+)
