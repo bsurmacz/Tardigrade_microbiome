@@ -8,8 +8,8 @@ THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), pa
 
 samples_experiment_2<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T)
 
-samples<-samples_experiment_2
-otus_in<-otus_experiment_2
+#samples<-samples_experiment_2
+#otus_in<-otus_experiment_2
 
 
 HEATMAP<-function(samples,otus_in)
@@ -79,7 +79,11 @@ Statistic_table_experiment_3<- read.csv("../EXPERIMENT3/RENAMED/Results/Statisti
 
 QUANTIFICATION_PLOT<-function(samples,Statistic_table){
 	number_of_spikein_copies<- 1000
-	quant <- t(Statistic_table["Symbionts_reads",]/(Statistic_table["Extraction_Spikeins_reads",]))
+	
+	symbiont_reads<-Statistic_table["Symbionts_reads",]+Statistic_table["Algae_reads",]+Statistic_table["Rotifers reads",]
+	
+	
+	quant <- t(symbiont_reads/(Statistic_table["Extraction_Spikeins_reads",]))
 	colnames(quant)<-"quant"
 	rownames(samples)<- c( "REPLICATE", "EXTRACTION","SPECIES","BLANK_TYPE", "N","WASHED","lab","xx","experiment","SAMPLE","NAME"   )
 	samples<-t(samples)
@@ -95,14 +99,13 @@ QUANTIFICATION_PLOT<-function(samples,Statistic_table){
 	q$BLANK_TYPE[q$BLANK_TYPE=="rotifers"]<-"3.algae"
 	q$BLANK_TYPE[q$BLANK_TYPE==""]<-"4.not_blank"
 	q$quant<-as.numeric(as.character(q$quant))
-	q$quant[q$quant==Inf]<-4000
-	q$quant[q$quant>3000]<-0
+	q$quant[q$quant==Inf]<-10000000
 	q[q$EXTRACTION=="beads",]$quant <-  5* q[q$EXTRACTION=="beads",]$quant  # in SPRIbeads extraction - spikein was added to 0.2 of sample
-	q$EXTRACTION<-q$EXTRACTION*number_of_spikein_copies
-	PLOT<-ggplot( q,aes(x=NAME, y=quant ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME
+	q$quant<-q$quant*number_of_spikein_copies
+	PLOT<-ggplot( q,aes(x=NAME, y=log10(quant) ))+geom_bar(stat="identity")+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+SPECIES+REPLICATE+N+SAMPLE+NAME, scales = "free", space = "free")+THEME+ scale_y_continuous(breaks = seq(0, 10, by = 1))
 	return(PLOT)
 }
-
+#QUANTIFICATION_PLOT(samples_experiment_2, Statistic_table_experiment_2)
 
 ####
 ### otus to show
@@ -159,7 +162,7 @@ OTU_PLOT<-function(otus,N_col_to_remove,nonblanks_only,samples,otus_to_show){
 
 		nothing<-as.data.frame(t(c(otus[1,]*0)))
 		rownames(nothing)<-"nothing"
-		
+	
 		nothing[,samples[ 4,colnames(nothing)]!=""  | colSums(otus)==0  ]<-100
 		otus[,samples[ 4,colnames(nothing)]!=""] <-0
 		otus<-rbind(otus,nothing)
@@ -196,10 +199,6 @@ OTU_PLOT<-function(otus,N_col_to_remove,nonblanks_only,samples,otus_to_show){
 
 
 
-
-
-
-
 	color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
 
 	set.seed(113+1009+333)
@@ -207,18 +206,21 @@ OTU_PLOT<-function(otus,N_col_to_remove,nonblanks_only,samples,otus_to_show){
 	col_vector<-setNames(col_vector, c("Others",paste0("otu",1:420),"nothing"))
 	col_vector[["otu14"]]<-"cyan3"
 	col_vector[["otu18"]]<-"sienna1"
-		col_vector[["otu25"]]<-"palevioletred"
+	col_vector[["otu25"]]<-"palevioletred"
 	col_vector[["otu72"]]<-"bisque1"
 	col_vector[["otu88"]]<-"honeydew2"
 	col_vector[["otu133"]]<-"yellow2"
 	col_vector[["otu1273"]]<-"aquamarine2"
 
+	print(col_vector)
+	
+	col_vector<-col_vector[names(col_vector) %in% rownames(otus)] 
+	
 	output_plot<-ggplot( melted_otus, aes(x=SAMPLE_NAME,y=value,fill=Var2) )+geom_bar(stat="identity",position="stack", width=2)+ theme(panel.border = element_blank() ,panel.background = element_blank() )+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+GENUS+SPECIES+REPLICATE+N+SAMPLE, scales = "free", space = "free")+THEME+ scale_y_continuous(limits = c(0,101), expand = c(0, 0))+xlab("")+ylab("Relative abundance") +scale_fill_manual(values=col_vector)
 
 	return(output_plot)
 	}
-
-
+ 
 
 ###################################################
 #   Contamination plots
@@ -324,12 +326,14 @@ dev.off()
 
 dev.new()
 svg("EXPERIMENT_2_otus.svg",width=20, height=30)
-ggarrange(CONTAMINATION_PLOT_experiment_2,FULL_PLOT_experiment_2,DECONTAMINATED_PLOT_experiment_2,Q_PLOT_2, ncol=1,common.legend = FALSE, legend="bottom")
+ggarrange(CONTAMINATION_PLOT_experiment_2,Q_PLOT_2,DECONTAMINATED_PLOT_experiment_2, ncol=1,common.legend = FALSE, legend="bottom")
+dev.off()
 dev.off()
 
 dev.new()
 svg("EXPERIMENT_3_otus.svg",width=20, height=30)
-ggarrange(CONTAMINATION_PLOT_experiment_3,FULL_PLOT_experiment_3,DECONTAMINATED_PLOT_experiment_3,Q_PLOT_3, ncol=1,common.legend = FALSE, legend="bottom")
+ggarrange(CONTAMINATION_PLOT_experiment_3,Q_PLOT_3,DECONTAMINATED_PLOT_experiment_3, ncol=1,common.legend = FALSE, legend="bottom")
 dev.off()
-
+dev.off()
+dev.off()
 
