@@ -8,6 +8,11 @@ samples<- read.csv("../../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=
 full_data<-read.table("../../EXPERIMENT1/Results/zotu_table_expanded.txt",sep="\t",header=T)
 decontaminated_data<-read.table("../../EXPERIMENT1/Results/Decontaminated_zOTU_table.txt",sep="\t",header=T)
 
+excluded<-c("EXPERIMENT_1_T_AU_031_1","EXPERIMENT_1_T_AU_031_2")
+
+full_data<-full_data[, ! colnames(full_data) %in% excluded ]
+decontaminated_data<-decontaminated_data[, ! colnames(decontaminated_data) %in% excluded ]
+
 
 decontaminated_data<-decontaminated_data[-ncol(decontaminated_data)]
 #
@@ -114,7 +119,7 @@ pcoa_plot<-function(data,Title,scale_shape,colors,extraction){
 
 	plot_data<-ggplot( aes(x=NMDS1,y=NMDS2,colour=species,shape=type),data=data)+ geom_point(data=data,size=5)+ geom_polygon(data =hulls, aes(group=species,fill=species,color=species), alpha = 0.1)+scale_fill_manual(values=colors)+scale_color_manual(values=colors)+theme_bw()+scale_shape_manual(values=scale_shape)+labs(title=Title)
 	if(extraction){
-	plot_data<-plot_data+new_scale_color() +geom_point(shape = 1, aes(x=NMDS1,y=NMDS2,color=extraction),size=7)+scale_color_manual(values=c("red","blue","gray"))
+#	plot_data<-plot_data+new_scale_color() +geom_point(shape = 1, aes(x=NMDS1,y=NMDS2,color=extraction),size=7)+scale_color_manual(values=c("red","blue","gray"))
 	}
 return(plot_data)
 }
@@ -151,24 +156,70 @@ col_vector[23]<-"tomato2"
 col_vector[25]<-"maroon"
 col_vector[27]<-"rosybrown1"
 
-exp1_a_full<-pcoa_plot(cursory_EXP1_scores_full,"Experiment 1B: raw data",c(16, 15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
-exp1_a_decontaminated<-pcoa_plot(cursory_EXP1_scores_decontaminated,"Experiment 1b: decontaminated",c(16, 1),col_vector,FALSE)
+
+colorscale<-col_vector
+names(colorscale)<-unique(cursory_EXP1_scores_full$species)
+
+colorscale["_algae"]<-"#458a00"
+colorscale["_rotifers"]<-"darkorange3"
+colorscale["_blank"]<-"#777777"
+colorscale["Macrobiotus cf. recens PT.056"]<-"#ad3b9c"
+colorscale["Mesobiotus sp. VN.036"]<-"#458a00"
+colorscale["Macrobiotus canaricus ES.004"]<-"#9c8936"
+colorscale["Milnesium tardigradum FR.072"]<-"#5c3a1a"
+colorscale["Paramacrobiotus sp.  FR.123"]<-"#dcc5e6"
+colorscale["Milnesium inceptum NZ.030"]<-"#780128"
+colorscale["Paramacrobiotus sp. PT.035"]<-"linen"
+colorscale["Mesobiotus sp. RU.017"]<-"#7adecd"
+colorscale["Paramacrobiotus sp. PT.006"]<-"#c6f7ef"
+colorscale["Paramacrobiotus fairbanksi PL.018"]<-"#e3bfcd"
+colorscale["Hypsibius sp.  PL.016"]<-"#c4620c"
+colorscale["Macrobiotus polonicus SK.003"]<-"#fce4a2"
+colorscale["Pseudobiotus sp.  PL.318"]<-"#7b856d"
+colorscale["Macrobiotus polonicus PT.008"]<-"#d45500"
+
+
+exp1_a_full<-pcoa_plot(cursory_EXP1_scores_full,"Experiment 1B: raw data",c(16, 18,4,1,17),colorscale,FALSE)
+exp1_a_decontaminated<-pcoa_plot(cursory_EXP1_scores_decontaminated,"Experiment 1b: decontaminated",c(16, 1),colorscale,FALSE)
 exp1_a_full
 
+
+
+ggarrange(exp1_a_full, exp1_a_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
 ##
-exp1_b_full<-pcoa_plot(detailed_EXP1_scores_full,"Experiment 1a: raw data",c(16, 15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),T)
-exp1_b_decontaminated<-pcoa_plot(detailed_EXP1_scores_decontaminated,"Experiment 1a: decontaminated",c(16, 1),col_vector,T)
+
+detailed_EXP1_scores_full$type[  detailed_EXP1_scores_full$type %in% c("1","10","medium")]<-paste( detailed_EXP1_scores_full$type[  detailed_EXP1_scores_full$type %in% c("1","10","medium")] , detailed_EXP1_scores_full$extraction[  detailed_EXP1_scores_full$type %in% c("1","10","medium")] )
+
+detailed_EXP1_scores_decontaminated$type[  detailed_EXP1_scores_decontaminated$type %in% c("1","10","medium")]<-paste( detailed_EXP1_scores_decontaminated$type[  detailed_EXP1_scores_decontaminated$type %in% c("1","10","medium")] , detailed_EXP1_scores_decontaminated$extraction[  detailed_EXP1_scores_decontaminated$type %in% c("1","10","medium")] )
+
+
+
+shapescale<-c(4, 18,15,0,17,16,1)
+names(shapescale)<-unique(detailed_EXP1_scores_full$type)
+
+colorscale<-c("#777777","#458a00", "#9fb87f","#f5b433","#c48eed","darkorange3" )
+names(colorscale)<-unique(detailed_EXP1_scores_full$species)
+
+
+
+exp1_b_full<-pcoa_plot(detailed_EXP1_scores_full,"Experiment 1a: raw data",shapescale,colorscale,F)
+exp1_b_decontaminated<-pcoa_plot(detailed_EXP1_scores_decontaminated,"Experiment 1a: decontaminated",shapescale,colorscale,F)
 ggarrange(exp1_b_full, exp1_b_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
 
 detailed_EXP1_scores_full$extraction
 
+
+exp1_a_full
+
 dev.new()
-svg("PCoA_exp1a.svg",width=20,height=9)
+svg("PCoA_exp1a_new.svg",width=20,height=9)
 ggarrange(exp1_a_full, exp1_a_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
 dev.off()
 
 dev.new()
-svg("PCoA_exp1b.svg",width=20,height=9)
+svg("PCoA_exp1b_new.svg",width=20,height=9)
 ggarrange(exp1_b_full, exp1_b_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
 dev.off()
 

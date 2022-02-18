@@ -124,9 +124,39 @@ col_vector[8]<-"#ca8b44"
 col_vector[9]<-"firebrick1"
 
 col_vector[2]<-"violet"
-exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
-exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),col_vector,FALSE)
-ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
+
+
+colorscale<-col_vector
+names(colorscale)<-unique(EXP2_scores_decontaminated$species)
+
+colorscale[ "Meb.KE.008"]<- "#9eb87d"   
+colorscale["Mac.PL.010" ]  <- "#f5b333"
+colorscale["Mac.PL.015"]   <- "#c28ceb"
+colorscale["Pam.ric.ZA.212"]<- "#a98dc4"
+colorscale["Pam.fai.PL.018"]<-"#e3bfcd"
+colorscale["Pam.ric.KG.133"]<- "#b5f7d9"
+colorscale["Mac.LT.013" ]   <- "#ffbaf8"
+colorscale["Mac.PL.352"]    <- "#ff87ad"
+colorscale["Mac.IN.030"]    <-  "#ffd700"
+colorscale["Pam.ric.TZ.073"]<- "#cadfe8"
+colorscale["Meb.GB.093"]    <- "#5e7a8a"
+colorscale["Mac.PL.110"]    <- "#cc0000"
+
+
+
+#exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 3: raw data",c(19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
+
+
+exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 3: decontaminated",c(19, 1),colorscale,FALSE)
+exp2_decontaminated
+#ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
+
+dev.new()
+svg("PCoA_exp3.svg",width=10,height=9)
+exp2_decontaminated
+dev.off()
 
 
 

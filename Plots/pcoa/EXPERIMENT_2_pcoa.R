@@ -109,7 +109,14 @@ EXP2_scores_decontaminated$extraction[EXP2_scores_decontaminated$extraction=="be
 
 
 exp2_full<-pcoa_plot(EXP2_scores_full,"Experiment 2: raw data",c(20,19,15,4,1,17),c("chartreuse4","777777","darkorange3",col_vector),FALSE)
-exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 2: decontaminated",c(20,19, 1),col_vector,FALSE)
+
+
+
+colorscale<-c("#9fb87f","#f5b433","#c48eed")
+names(colorscale)<-unique(EXP2_scores_decontaminated$species)
+
+
+exp2_decontaminated<-pcoa_plot(EXP2_scores_decontaminated,"Experiment 2: decontaminated",c(20,19, 1),colorscale,FALSE)
 
 
 

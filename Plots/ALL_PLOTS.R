@@ -47,6 +47,19 @@ HEATMAP<-function(samples,otus_in)
 	}
 
 
+library(dplyr)
+
+getmode <- function(v) {
+   uniqv <- unique(v)
+   uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+
+sum_and_class<-function(x){       
+if(is.numeric(x) ) {return(sum(x) ) }
+                   else{ getmode(x) }}
+
+
+
 
 		
 samples_experiment_1<- read.csv("../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=T)
@@ -54,6 +67,167 @@ otus_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/Decontaminated_OTU_T
 Statistic_table_experiment_1<- read.csv("../EXPERIMENT1/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
 otus_full_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/otu_table_experiment_1.txt",sep="\t", header=T,row.names=1)
 
+###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+otus_full_experiment_1<-read.csv2("../EXPERIMENT1/RENAMED/Results/Table_with_classes.txt",sep="\t", header=T,row.names=1)
+otus_full_experiment_1<- otus_full_experiment_1[otus_full_experiment_1[,1]!="Chimera",]
+
+otus_full_experiment_1<-otus_full_experiment_1[,-c(2:4)]
+otus_full_experiment_1<-otus_full_experiment_1[ otus_full_experiment_1$Class != "Non-Bacteria" ,]
+
+otus_full_experiment_1_Classes<-otus_full_experiment_1$Class
+
+summed<-otus_full_experiment_1 %>% group_by(OTU_assignment) %>% summarise_each(funs(sum_and_class))
+summed<-data.frame(summed)
+rownames(summed)<-summed[,1]
+summed<-summed[,-1]
+
+otus_full_experiment_1[ otus_full_experiment_1[,1]=="otu19" ,]
+
+
+
+sources<-data.frame(otus_full_experiment_1 %>% group_by(Class) %>% summarise_each(funs(sum_and_class))  )
+rownames(sources)<-sources$Class
+sources<-sources[,-c(1:2)]
+sources_relative<-apply(sources,2, function(x){x/sum(x)})
+sources_relative
+
+
+
+OTU1 <- summed["otu1",-ncol(summed)]
+OTU2 <- summed["otu2",-ncol(summed)]
+OTU3 <- summed["otu3",-ncol(summed)]
+OTU29 <- summed["otu29",-ncol(summed)]
+OTU41 <- summed["otu41",-ncol(summed)]
+
+
+
+
+OTHER_CONTAMINANTS <-  sources[ c("Extraction_Contaminant","PCR_Contaminant","Algae","Rotifers") ,]
+OTHER_CONTAMINANTS <- t(data.frame(colSums(OTHER_CONTAMINANTS)))
+
+
+
+SYMBIONTS<-sources["Symbiont",]
+
+contaminant_otus<- c( "otu1","otu2","otu3","otu29","otu41")
+
+
+otus_full_experiment_1 [ otus_full_experiment_1[,1]== "otu1", ]<-"Rotifers"
+otus_full_experiment_1 [ otus_full_experiment_1[,1]== "otu2", ]<-"PCR_Contaminant"
+otus_full_experiment_1 [ otus_full_experiment_1[,1]== "otu3", ]<-"Rotifers"
+otus_full_experiment_1 [ otus_full_experiment_1[,1]== "otu29", ]<-"Algae"
+otus_full_experiment_1 [ otus_full_experiment_1[,1]== "otu41", ]<-"Algae"
+   
+
+CONTAMINANT_OTUS<-otus_full_experiment_1 [ otus_full_experiment_1[,1] %in% contaminant_otus, ]
+CONTAMINANT_OTUS<-colSums(CONTAMINANT_OTUS[-c(1,ncol(CONTAMINANT_OTUS))])
+
+
+
+
+ROTIFERS<- summed[summed$Class=="Rotifers", -ncol(summed)]  
+ROTIFERS<-rowSums(ROTIFERS)
+
+ALGAE<- summed[summed$Class=="Algae", -ncol(summed)]  
+ALGAE<-rowSums(ALGAE)
+
+
+OTHER_CONTAMINANTS<-OTHER_CONTAMINANTS - CONTAMINANT_OTUS
+rownames(OTHER_CONTAMINANTS)<-"Other contaminants"
+
+TO_PLOT<-rbind(SYMBIONTS,OTHER_CONTAMINANTS,OTU41,OTU29,OTU3,OTU2,OTU1)
+
+
+
+TO_PLOT<-apply(TO_PLOT,2, function(x){100*x/sum(x)})
+
+TO_PLOT<-TO_PLOT[,!colnames(TO_PLOT) %in% excluded_experiment1]
+
+
+TO_PLOT
+
+
+
+
+#######################################&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+otus<-TO_PLOT
+samples<- samples_experiment_1
+
+
+
+	melted_otus<-melt(t(otus))
+	melted_otus$REPLICATE<-t( samples[1, paste0(melted_otus[,1])])
+	melted_otus$EXTRACTION<-t( samples[2, paste0(melted_otus[,1])])
+
+	melted_otus$EXTRACTION[melted_otus$EXTRACTION=="Chelex"]<-"1.Chelex"
+	melted_otus$EXTRACTION[melted_otus$EXTRACTION=="beads"]<-"2.SPRIbeads"
+
+	melted_otus$SPECIES<-t( samples[3, paste0(melted_otus[,1])])
+	melted_otus$BLANK_TYPE<-t( samples[4, paste0(melted_otus[,1])])
+	melted_otus$N<-t( samples[5, paste0(melted_otus[,1])])
+	melted_otus$WASHED<-t( samples[6, paste0(melted_otus[,1])])
+	melted_otus$EXPERIMENT<-t( samples[9, paste0(melted_otus[,1])])
+	melted_otus$GENUS<-t( samples[10, paste0(melted_otus[,1])])
+	melted_otus$SAMPLE_NAME<-t( samples[11, paste0(melted_otus[,1])])
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE=="blank"]<-"0.blank"
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE=="ludwik"]<-"1.ludwik"
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE=="zywiec"]<-"1.zywiec"
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE=="algae"]<-"2.algae"
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE=="rotifers"]<-"3.algae"
+	melted_otus$BLANK_TYPE[melted_otus$BLANK_TYPE==""]<-"4.not_blank"
+	melted_otus$SAMPLE<-melted_otus[,1]
+	melted_otus$WITH_REPLICATES<-melted_otus$REPLICATE %in% c("A","B","C")
+	melted_otus$NAME<-paste(melted_otus$EXTRACTION, melted_otus$SPECIES,melted_otus$REPLICATE,melted_otus$N)
+
+#	if(nonblanks_only==T){
+#		melted_otus<-subset(melted_otus,BLANK_TYPE=="4.not_blank")
+#		}
+
+
+
+	color = grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)]
+
+	set.seed(113+1009+333)
+	col_vector<-c("#dadada",brewer.pal(n = 12, name = "Paired"),sample(color, 408),"white","#b6b6b6","darkolivegreen1")
+	col_vector<-setNames(col_vector, c("Others",paste0("otu",1:420),"nothing","Other contaminants","Symbiont"))
+	col_vector[["otu14"]]<-"cyan3"
+	col_vector[["otu18"]]<-"sienna1"
+	col_vector[["otu25"]]<-"palevioletred"
+	col_vector[["otu72"]]<-"bisque1"
+	col_vector[["otu88"]]<-"honeydew2"
+	col_vector[["otu133"]]<-"yellow2"
+	col_vector[["otu1273"]]<-"aquamarine2"
+
+	print(col_vector)
+	
+	col_vector<-col_vector[names(col_vector) %in% rownames(otus)] 
+	
+	output_plot<-ggplot( melted_otus, aes(x=SAMPLE_NAME,y=value,fill=Var2) )+geom_bar(stat="identity",position="stack", width=2)+ theme(panel.border = element_blank() ,panel.background = element_blank() )+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+GENUS+SPECIES+REPLICATE+N+SAMPLE, scales = "free", space = "free")+THEME+ scale_y_continuous(limits = c(0,101), expand = c(0, 0))+xlab("")+ylab("Relative abundance") +scale_fill_manual(values=col_vector)
+
+
+
+dev.new()
+svg("EXPERIMENT_1_otus_contam.svg",width=20, height=15)
+output_plot
+dev.off()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#######################################&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 excluded_experiment1<-c("EXPERIMENT_1_TZ_Neg_PCRI","EXPERIMENT_1_T_AU_031_1","EXPERIMENT_1_T_AU_031_2")
 samples_experiment_1<-samples_experiment_1[,!colnames(samples_experiment_1) %in% excluded_experiment1 ]
@@ -228,6 +402,10 @@ OTU_PLOT<-function(otus,N_col_to_remove,nonblanks_only,samples,otus_to_show){
 CONTAMINATION_PLOT<-function(Statistic_table,samples){
 
 percentages<-Statistic_table[c(12,22,21,13,14,17),  ] 
+
+
+# zmianty tutaj 17/20/2022
+percentages<-sources_relative[c(5,4,1,3,2),]*100
 melted<-melt(t(percentages))
 melted$REPLICATE<-t( samples[1, paste0(melted[,1])])
 
@@ -257,6 +435,14 @@ COLORS<-c("darkolivegreen1","darkorange3","chartreuse4","#777777","#555555","#ff
 THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.border=element_rect(colour = "#ffffff", fill=NA, size=0.5), strip.background = element_blank(),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),strip.text   = element_text(size=0),legend.title=element_blank() )
 
 OUTPUT_PLOT<-ggplot( melted, aes(x=SAMPLE_NAME,y=value,fill=Var2) )+geom_bar(stat="identity",position="stack", width=2)+ theme(panel.border = element_blank() ,panel.background = element_blank() )+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+GENUS+SPECIES+REPLICATE+N+SAMPLE, scales = "free", space = "free")+THEME+ scale_y_continuous(limits = c(0,101), expand = c(0, 0))+scale_fill_manual(values=COLORS)+xlab("")+ylab("Relative abundance")
+
+
+dev.new()
+svg("EXPERIMENT_1_contam.svg",width=20, height=15)
+OUTPUT_PLOT
+dev.off()
+############################################
+
 return (OUTPUT_PLOT)
 }
 
@@ -270,6 +456,15 @@ return (OUTPUT_PLOT)
 
 
 ####################################################
+
+
+
+
+
+
+
+
+
 
 
 #		otus,otus_full,N_mean_otus,N_mean_full,N_max_otus,N_max_full
