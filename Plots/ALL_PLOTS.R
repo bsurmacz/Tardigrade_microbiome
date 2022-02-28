@@ -3,6 +3,7 @@ library(ggplot2)
 library(RColorBrewer)
 library(ggpubr)
 library(gplots)
+library(dplyr)
 
 THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.border=element_rect(colour = "#ffffff", fill=NA, size=0.5), strip.background = element_blank(),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),strip.text   = element_text(size=0),legend.title=element_blank() )
 
@@ -47,7 +48,6 @@ HEATMAP<-function(samples,otus_in)
 	}
 
 
-library(dplyr)
 
 getmode <- function(v) {
    uniqv <- unique(v)
@@ -62,7 +62,12 @@ if(is.numeric(x) ) {return(sum(x) ) }
 
 
 		
-samples_experiment_1<- read.csv("../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=T)
+samples_experiment_1<- read.csv("../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=T,row.names=NULL)
+samples_experiment_2<- read.csv("../EXPERIMENT2/SAMPLES_EXPERIMENT2.csv",sep="\t", header=T,row.names=NULL)
+samples_experiment_3<- read.csv("../EXPERIMENT3/SAMPLES_EXPERIMENT3.csv",sep="\t", header=T,row.names=NULL)
+
+
+
 otus_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/Decontaminated_OTU_Table.txt",sep="\t", header=T,row.names=1)
 Statistic_table_experiment_1<- read.csv("../EXPERIMENT1/RENAMED/Results/Statistics_table.txt",sep="\t",header=T,row.names=1)
 otus_full_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/otu_table_experiment_1.txt",sep="\t", header=T,row.names=1)
@@ -70,12 +75,171 @@ otus_full_experiment_1<-read.csv("../EXPERIMENT1/RENAMED/Results/otu_table_exper
 ###@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 otus_full_experiment_1<-read.csv2("../EXPERIMENT1/RENAMED/Results/Table_with_classes.txt",sep="\t", header=T,row.names=1)
-otus_full_experiment_1<- otus_full_experiment_1[otus_full_experiment_1[,1]!="Chimera",]
+otus_full_experiment_2<-read.csv2("../EXPERIMENT2/RENAMED/Results/Table_with_classes.txt",sep="\t", header=T,row.names=1)
+otus_full_experiment_3<-read.csv2("../EXPERIMENT3/RENAMED/Results/Table_with_classes.txt",sep="\t", header=T,row.names=1)
 
-otus_full_experiment_1<-otus_full_experiment_1[,-c(2:4)]
-otus_full_experiment_1<-otus_full_experiment_1[ otus_full_experiment_1$Class != "Non-Bacteria" ,]
 
-otus_full_experiment_1_Classes<-otus_full_experiment_1$Class
+
+## associated with tardigrades
+# początek:
+
+#to relative
+
+CwE1<-contamination_with_enriched(otus_full_experiment_1,samples_experiment_1)
+CwE2<-contamination_with_enriched(otus_full_experiment_2,samples_experiment_2)
+CwE3<-contamination_with_enriched(otus_full_experiment_3,samples_experiment_3)
+
+dev.new()
+svg("EXPERIMENT_1_contam_with_enriched.svg",width=20, height=15)
+CwE1
+dev.off()
+dev.new()
+svg("EXPERIMENT_2_contam_with_enriched.svg",width=20, height=15)
+CwE2
+dev.off()
+dev.new()
+svg("EXPERIMENT_3_contam_with_enriched.svg",width=20, height=15)
+CwE3
+dev.off()
+
+
+
+
+
+
+contamination_with_enriched<-function(Otus, Samples){
+
+Otus<- Otus[Otus[,1]!="Chimera",]
+Otus<-Otus[,-c(1:4)]
+Otus<-Otus[ Otus$Class != "Non-Bacteria" ,]
+
+
+Otus_relative<- apply(Otus[,-c(ncol(Otus))], 2, function(x){x/sum(x)})
+
+Otus_symbionts<-Otus_relative[ Otus$Class == "Symbiont" ,]
+sample_names<-as.character(colnames(Otus_relative))
+
+
+individuals_symbionts<-Otus_symbionts[,Samples[ 5,  paste0(sample_names) ] %in% c("1","10","5","20","50")   ]
+medium_symbionts<-Otus_symbionts[,Samples[ 5,  paste0(sample_names) ]=="medium"]
+
+max_individuals_symbionts<-apply(individuals_symbionts,1,max  )
+max_medium_symbionts<-apply(medium_symbionts,1, max    )   	#bez NA ujdzie
+
+enriched<-max_individuals_symbionts>10*max_medium_symbionts
+
+
+enr_in_tardigrades<-colSums( Otus_symbionts[ enriched,] )
+enr_in_medium<-colSums( Otus_symbionts[ !enriched,] )
+
+
+if(   sum(Otus_relative[Otus$Class=="Extraction_Spikein",])>0  ){
+
+# może tu by policzyś absolutne abundancje?
+
+#		Otus_N<-Otus[,-ncol(Otus)]
+#		spikein_reads<- Otus_N[Otus$Class=="Extraction_Spikein",]
+#
+#		absolute_abundance<- apply(Otus_N,1, function(x){ x/spikein_reads} )
+#
+#
+#		individuals_absolute_abundance<-absolute_abundance[,Samples[ 5,  paste0(sample_names) ] %in% c("1","10","5","20","50")   ]
+#		medium_absolute_abundance<-absolute_abundance[,Samples[ 5,  paste0(sample_names) ]=="medium"]
+#
+#		max_individuals_absolute_abundance<-apply(individuals_absolute_abundance,1,max  )
+#		max_medium_absolute_abundance<-apply(medium_absolute_abundance,1, max    )   	#bez NA ujdzie
+
+#		enriched<-max_individuals_absolute_abundance>max_medium_absolute_abundance
+
+
+}
+
+
+
+
+PCR_Contaminant<- colSums(Otus_relative[Otus$Class=="PCR_Contaminant",])
+Extraction_Contaminant<-colSums(Otus_relative[Otus$Class=="Extraction_Contaminant",])
+Algae<-colSums(Otus_relative[Otus$Class=="Algae",])
+Rotifers<-colSums(Otus_relative[Otus$Class=="Rotifers",])
+
+
+Extraction_Spikein<-Otus_relative[Otus$Class=="Extraction_Spikein",]
+
+
+
+
+contam_plot<-rbind(  enr_in_tardigrades, enr_in_medium,   Rotifers,Algae,PCR_Contaminant,Extraction_Contaminant,Extraction_Spikein)
+
+
+
+
+print( contam_plot)
+
+
+melted_contam_plot<-melt(t(contam_plot*100))
+
+##
+melted<-melted_contam_plot
+samples<-Samples
+############# skopiowane z funkcji
+
+melted$REPLICATE<-t( samples[1, paste0(melted[,1])])
+
+
+melted$EXTRACTION<-t( samples[2, paste0(melted[,1])])
+melted$EXTRACTION[melted$EXTRACTION=="Chelex"]<-"1.Chelex"
+melted$EXTRACTION[melted$EXTRACTION=="beads"]<-"2.SPRIbeads"
+melted$SPECIES<-t( samples[3, paste0(melted[,1])])
+melted$BLANK_TYPE<-t( samples[4, paste0(melted[,1])])
+melted$N<-t( samples[5, paste0(melted[,1])])
+melted$WASHED<-t( samples[6, paste0(melted[,1])])
+melted$EXPERIMENT<-t( samples[9, paste0(melted[,1])])
+melted$GENUS<-t( samples[10, paste0(melted[,1])])
+melted$SAMPLE_NAME<-t( samples[11, paste0(melted[,1])])
+melted$BLANK_TYPE[melted$BLANK_TYPE=="blank"]<-"0.blank"
+melted$BLANK_TYPE[melted$BLANK_TYPE=="ludwik"]<-"1.ludwik"
+melted$BLANK_TYPE[melted$BLANK_TYPE=="zywiec"]<-"1.zywiec"
+melted$BLANK_TYPE[melted$BLANK_TYPE=="algae"]<-"2.algae"
+melted$BLANK_TYPE[melted$BLANK_TYPE=="rotifers"]<-"3.algae"
+melted$BLANK_TYPE[melted$BLANK_TYPE==""]<-"4.not_blank"
+melted$SAMPLE<-melted[,1]
+melted$WITH_REPLICATES<-melted$REPLICATE %in% c("A","B","C")
+melted$NAME<-paste(melted$EXTRACTION, melted$SPECIES,melted$REPLICATE,melted$N)
+
+COLORS<-c("yellow","darkolivegreen1","darkorange3","chartreuse4","#777777","#555555","#ff00ff")
+
+THEME<-theme(panel.margin=unit(c(0), "lines"),  axis.ticks.x=element_blank(), panel.grid.major=element_blank(),panel.grid.minor=element_blank(),panel.border=element_rect(colour = "#ffffff", fill=NA, size=0.5), strip.background = element_blank(),axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),strip.text   = element_text(size=0),legend.title=element_blank() )
+
+OUTPUT_PLOT<-ggplot( melted, aes(x=SAMPLE_NAME,y=value,fill=Var2) )+geom_bar(stat="identity",position="stack", width=2)+ theme(panel.border = element_blank() ,panel.background = element_blank() )+facet_grid(~EXTRACTION+WITH_REPLICATES+BLANK_TYPE+GENUS+SPECIES+REPLICATE+N+SAMPLE, scales = "free", space = "free")+THEME+ scale_y_continuous(limits = c(0,101), expand = c(0, 0))+scale_fill_manual(values=COLORS)+xlab("")+ylab("Relative abundance")
+
+return(OUTPUT_PLOT)
+
+} #/koniec nowej funkcji
+###############  /skopiowane z funkcji
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# koniec
+##############################
 
 summed<-otus_full_experiment_1 %>% group_by(OTU_assignment) %>% summarise_each(funs(sum_and_class))
 summed<-data.frame(summed)
@@ -86,11 +250,18 @@ otus_full_experiment_1[ otus_full_experiment_1[,1]=="otu19" ,]
 
 
 
+
+
+
 sources<-data.frame(otus_full_experiment_1 %>% group_by(Class) %>% summarise_each(funs(sum_and_class))  )
 rownames(sources)<-sources$Class
 sources<-sources[,-c(1:2)]
 sources_relative<-apply(sources,2, function(x){x/sum(x)})
 sources_relative
+
+
+
+
 
 
 
