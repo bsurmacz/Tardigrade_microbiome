@@ -161,7 +161,7 @@ dev.off()
 
 
 dev.new()
-svg("PCoA_exp3.svg",width=20,height=9)
+svg("PCoA_exp3both.svg",width=20,height=9)
 ggarrange(exp2_full, exp2_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
 dev.off()
 
