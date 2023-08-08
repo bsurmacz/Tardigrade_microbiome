@@ -1,0 +1,147 @@
+cairo                package:grDevices                 R Documentation
+
+_C_a_i_r_o_g_r_a_p_h_i_c_s-_b_a_s_e_d _S_V_G, _P_D_F _a_n_d _P_o_s_t_S_c_r_i_p_t _G_r_a_p_h_i_c_s _D_e_v_i_c_e_s
+
+_D_e_s_c_r_i_p_t_i_o_n:
+
+     Graphics devices for SVG, PDF and PostScript graphics files using
+     the cairo graphics API.
+
+_U_s_a_g_e:
+
+     svg(filename = if(onefile) "Rplots.svg" else "Rplot%03d.svg",
+         width = 7, height = 7, pointsize = 12,
+         onefile = FALSE, family = "sans", bg = "white",
+         antialias = c("default", "none", "gray", "subpixel"),
+         symbolfamily)
+     
+     cairo_pdf(filename = if(onefile) "Rplots.pdf" else "Rplot%03d.pdf",
+               width = 7, height = 7, pointsize = 12,
+               onefile = FALSE, family = "sans", bg = "white",
+               antialias = c("default", "none", "gray", "subpixel"),
+               fallback_resolution = 300, symbolfamily)
+     
+     cairo_ps(filename = if(onefile) "Rplots.ps" else "Rplot%03d.ps",
+              width = 7, height = 7, pointsize = 12,
+              onefile = FALSE, family = "sans", bg = "white",
+              antialias = c("default", "none", "gray", "subpixel"),
+              fallback_resolution = 300, symbolfamily)
+     
+_A_r_g_u_m_e_n_t_s:
+
+filename: the name of the output file.  The page number is substituted
+          if a C integer format is included in the character string, as
+          in the default.  (The result must be less than ‘PATH_MAX’
+          characters long, and may be truncated if not.  See
+          ‘postscript’ for further details.)  Tilde expansion is
+          performed where supported by the platform.
+
+   width: the width of the device in inches.
+
+  height: the height of the device in inches.
+
+pointsize: the default pointsize of plotted text (in big points).
+
+ onefile: should all plots appear in one file or in separate files?
+
+  family: one of the device-independent font families, ‘"sans"’,
+          ‘"serif"’ and ‘"mono"’, or a character string specify a font
+          family to be searched for in a system-dependent way.
+
+          On unix-alikes (incl.\ Mac), see the ‘Cairo fonts’ section in
+          the help for ‘X11’.
+
+      bg: the initial background colour: can be overridden by setting
+          par("bg").
+
+antialias: string, the type of anti-aliasing (if any) to be used;
+          defaults to ‘"default"’.
+
+fallback_resolution: numeric: the resolution in dpi used when falling
+          back to bitmap output.  Prior to R 3.3.0 this depended on the
+          cairo implementation but was commonly 300.
+
+symbolfamily: a length-one character string that specifies the font
+          family to be used as the "symbol" font (e.g., for plotmath
+          output).
+
+_D_e_t_a_i_l_s:
+
+     SVG (Scalar Vector Graphics) is a W3C standard for vector
+     graphics.  See <https://www.w3.org/Graphics/SVG/>.  The output
+     from ‘svg’ is SVG version 1.1 for ‘onefile = FALSE’ (the default),
+     otherwise SVG 1.2.  (Few SVG viewers are capable of displaying
+     multi-page SVG files.)
+
+     Note that unlike ‘postscript’ and ‘pdf’, ‘cairo_pdf’ and
+     ‘cairo_ps’ sometimes record _bitmaps_ and not vector graphics.  On
+     the other hand, they can (on suitable platforms) include a much
+     wider range of UTF-8 glyphs, and embed the fonts used.
+
+     The output produced by ‘cairo_ps(onefile = FALSE)’ will be
+     encapsulated postscript on a platform with cairo >= 1.6.
+
+     R can be compiled without support for any of these devices: this
+     will be reported if you attempt to use them on a system where they
+     are not supported.  They all require cairo version 1.2 or later.
+
+     If you plot more than one page on one of these devices and do not
+     include something like ‘%d’ for the sequence number in ‘file’ (or
+     set ‘onefile = TRUE’) the file will contain the last page plotted.
+
+     There is full support of semi-transparency, but using this is one
+     of the things liable to trigger bitmap output (and will always do
+     so for ‘cairo_ps’).
+
+_V_a_l_u_e:
+
+     A plot device is opened: nothing is returned to the R interpreter.
+
+_A_n_t_i-_a_l_i_a_s_i_n_g:
+
+     Anti-aliasing is applied to both graphics and fonts.  It is
+     generally preferable for lines and text, but can lead to
+     undesirable effects for fills, e.g. for ‘image’ plots, and so is
+     never used for fills.
+
+     ‘antialias = "default"’ is in principle platform-dependent, but
+     seems most often equivalent to ‘antialias = "gray"’.
+
+_C_o_n_v_e_n_t_i_o_n_s:
+
+     This section describes the implementation of the conventions for
+     graphics devices set out in the ‘R Internals’ manual.
+
+        • The default device size is in pixels (‘svg’) or inches.
+
+        • Font sizes are in big points.
+
+        • The default font family is Helvetica.
+
+        • Line widths are multiples of 1/96 inch.
+
+        • Circle radii have a minimum of 1/72 inch.
+
+        • Colours are interpreted by the viewing application.
+
+_W_a_r_n_i_n_g:
+
+     Support for all these devices are optional, so in packages they
+     should be used conditionally after checking
+     ‘capabilities("cairo")’.
+
+_N_o_t_e:
+
+     In principle these devices are independent of X11 (as is seen by
+     their presence on Windows).  But on a Unix-alike the cairo
+     libraries may be distributed as part of the X11 system and hence
+     that (for example, on ‘x86_64’ macOS, XQuartz) may need to be
+     installed.
+
+_S_e_e _A_l_s_o:
+
+     ‘Devices’, ‘dev.print’, ‘pdf’, ‘postscript’
+
+     ‘capabilities’ to see if cairo is supported.
+
+

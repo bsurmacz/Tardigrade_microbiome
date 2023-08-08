@@ -8,7 +8,18 @@ samples<- read.csv("../../EXPERIMENT1/SAMPLES_EXPERIMENT1.csv",sep="\t", header=
 full_data<-read.table("../../EXPERIMENT1/Results/zotu_table_expanded.txt",sep="\t",header=T)
 decontaminated_data<-read.table("../../EXPERIMENT1/Results/Decontaminated_zOTU_table.txt",sep="\t",header=T)
 
-excluded<-c("EXPERIMENT_1_T_AU_031_1","EXPERIMENT_1_T_AU_031_2")
+#excluded<-c("EXPERIMENT_1_T_AU_031_1","EXPERIMENT_1_T_AU_031_2")
+
+
+excluded<-c(
+"EXPERIMENT_1_T_GB_093_1",
+"EXPERIMENT_1_T_GB_093_2",
+"EXPERIMENT_1_T_HU_012_1",
+"EXPERIMENT_1_T_HU_012_2",
+"EXPERIMENT_1_T_RU_017_1",
+"EXPERIMENT_1_T_RU_017_2",
+"EXPERIMENT_1_T_VN_036_1",
+"EXPERIMENT_1_T_VN_036_2")
 
 full_data<-full_data[, ! colnames(full_data) %in% excluded ]
 decontaminated_data<-decontaminated_data[, ! colnames(decontaminated_data) %in% excluded ]
@@ -60,7 +71,7 @@ EXP1_MDS_decontaminated<-metaMDS( EXP1_decontaminated, distance="bray", k=2, try
 detailed_EXP1_MDS_decontaminated<-metaMDS(detaied_EXP1_decontaminated, distance="bray", k=2, trymax=max)
 detailed_EXP1_MDS_full<-metaMDS(detaied_EXP1_full, distance="bray", k=2, trymax=max)
 
-cursory_EXP1_MDS_decontaminated<-metaMDS(cursory_EXP1_decontaminated, distance="bray", k=2, trymax=max)
+cursory_EXP1_MDS_decontaminated<-metaMDS(cursory_EXP1_decontaminated, distance="bray", k=2, trymax=10000)
 cursory_EXP1_MDS_full<-metaMDS(cursory_EXP1_full, distance="bray", k=2, trymax=max)
 
 
@@ -70,8 +81,10 @@ EXP1_scores_decontaminated <- as.data.frame(scores(EXP1_MDS_decontaminated))
 
 detailed_EXP1_scores_decontaminated <- as.data.frame(scores(detailed_EXP1_MDS_decontaminated)) 
 detailed_EXP1_scores_full <- as.data.frame(scores(detailed_EXP1_MDS_full)) 
-cursory_EXP1_scores_decontaminated <- as.data.frame(scores(cursory_EXP1_MDS_decontaminated)) 
-cursory_EXP1_scores_full <- as.data.frame(scores(cursory_EXP1_MDS_full)) 
+
+
+cursory_EXP1_scores_decontaminated <- as.data.frame(scores(cursory_EXP1_MDS_decontaminated)$sites) 
+cursory_EXP1_scores_full <- as.data.frame(scores(cursory_EXP1_MDS_full)$sites) 
 
 
 EXP1_scores_full <- as.data.frame(scores(EXP1_MDS_full)) 
@@ -181,11 +194,16 @@ colorscale["Macrobiotus polonicus PT.008"]<-"#d45500"
 
 exp1_a_full<-pcoa_plot(cursory_EXP1_scores_full,"Experiment 1B: raw data",c(16, 18,4,1,17),colorscale,FALSE)
 exp1_a_decontaminated<-pcoa_plot(cursory_EXP1_scores_decontaminated,"Experiment 1b: decontaminated",c(16, 1),colorscale,FALSE)
-exp1_a_full
+
+PLOT_NEW_EXP_1<-ggarrange(exp1_a_full, exp1_a_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
+
+ggsave(PLOT_NEW_EXP_1,file="EXPERIMENT1.new.svg",width=7,height=7)
 
 
 
-ggarrange(exp1_a_full, exp1_a_decontaminated, ncol=2,common.legend = TRUE, legend="bottom")
+
+
 
 ##
 
