@@ -6,10 +6,11 @@
 
 
 ### The starting data:
-#### Experiment 1: Preliminary survey
-#### Experiment 2: Testing different tardigrade preparation approaches 
-#### Experiment 3: Final microbiome assay
 
+#### Experiment 1: Broad preliminary survey
+#### Experiment 2: Comparing replicate cultures
+#### Experiment 3: Comparing sample preparation approaches 
+#### Experiment 4: Species comparisons
 
 The workflow comprised 4 distinct steps. They are listed below, and either discussed in more details, or linked to further down.
 
