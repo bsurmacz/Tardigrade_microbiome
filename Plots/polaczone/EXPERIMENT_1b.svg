@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="1490.2649pt"
-   height="1387.7791pt"
-   viewBox="0 0 1490.2649 1387.7791"
+   width="1517.5852pt"
+   height="1429.554pt"
+   viewBox="0 0 1517.5852 1429.554"
    version="1.1"
    id="svg51239"
    sodipodi:docname="EXPERIMENT_1b.svg"
@@ -35,9 +35,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:document-units="pt"
      showgrid="false"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="332.69373"
-     inkscape:cy="1088.2373"
+     inkscape:zoom="1"
+     inkscape:cx="828.49998"
+     inkscape:cy="1153"
      inkscape:window-width="1920"
      inkscape:window-height="1043"
      inkscape:window-x="0"
@@ -31428,7 +31428,7 @@
   </defs>
   <g
      id="g279352"
-     transform="matrix(0.81303797,0,0,0.81303797,-90.93687,32.59239)">
+     transform="matrix(0.81303797,0,0,0.81303797,-90.936865,32.592392)">
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0.584986;stop-color:#000000"
        id="rect95361"
@@ -42604,12 +42604,12 @@
        style="fill:none;stroke:#dcc5e6;stroke-width:0.873268;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="circle102" />
     <polygon
-       points="312.82,89.95 307.14,95.64 301.45,89.95 307.14,84.26 "
+       points="307.14,84.26 312.82,89.95 307.14,95.64 301.45,89.95 "
        style="fill:#458a00;stroke:none;stroke-width:0.71;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon104"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="314.93,89.54 309.24,95.23 303.55,89.54 309.24,83.86 "
+       points="309.24,83.86 314.93,89.54 309.24,95.23 303.55,89.54 "
        style="fill:#458a00;stroke:none;stroke-width:0.71;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon106"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
@@ -42894,12 +42894,12 @@
        style="fill:none;stroke:#777777;stroke-width:0.873268;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="line198" />
     <polygon
-       points="338.44,117.67 332.75,123.36 327.06,117.67 332.75,111.98 "
+       points="332.75,111.98 338.44,117.67 332.75,123.36 327.06,117.67 "
        style="fill:#458a00;stroke:none;stroke-width:0.71;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon200"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="345.57,116.6 339.88,122.29 334.19,116.6 339.88,110.92 "
+       points="339.88,110.92 345.57,116.6 339.88,122.29 334.19,116.6 "
        style="fill:#458a00;stroke:none;stroke-width:0.71;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon202"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
@@ -42928,147 +42928,147 @@
        id="polygon210"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="307.14,89.95 309.24,89.54 339.88,116.6 332.75,117.67 "
+       points="332.75,117.67 307.14,89.95 309.24,89.54 339.88,116.6 "
        style="fill:#458a00;fill-opacity:0.1;stroke:#458a00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon212"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="58.66,167.1 66.75,159.53 82.87,152.55 56.79,175.4 47,181.21 "
+       points="56.79,175.4 47,181.21 58.66,167.1 66.75,159.53 82.87,152.55 "
        style="fill:#777777;fill-opacity:0.1;stroke:#777777;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon214"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="288.17,230.32 300.61,216.41 314.38,238.75 287.47,231.44 "
+       points="287.47,231.44 288.17,230.32 300.61,216.41 314.38,238.75 "
        style="fill:#cd6600;fill-opacity:0.1;stroke:#cd6600;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon216"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="167.5,286.07 75.07,169.69 "
+       points="75.07,169.69 167.5,286.07 "
        style="fill:#607b8b;fill-opacity:0.1;stroke:#607b8b;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon218"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="182.98,261.53 96.02,183.7 "
+       points="96.02,183.7 182.98,261.53 "
        style="fill:#c4620c;fill-opacity:0.1;stroke:#c4620c;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon220"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="183.66,226.35 110.85,173.23 "
+       points="110.85,173.23 183.66,226.35 "
        style="fill:#9c8936;fill-opacity:0.1;stroke:#9c8936;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon222"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="203.82,246.66 177.16,37.83 "
+       points="177.16,37.83 203.82,246.66 "
        style="fill:#ad3b9c;fill-opacity:0.1;stroke:#ad3b9c;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon224"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="208.1,257.86 102.27,196.72 "
+       points="102.27,196.72 208.1,257.86 "
        style="fill:#ff6347;fill-opacity:0.1;stroke:#ff6347;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon226"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="180.8,212.18 111.67,198.63 "
+       points="111.67,198.63 180.8,212.18 "
        style="fill:#8b5a00;fill-opacity:0.1;stroke:#8b5a00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon228"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="207.16,238.6 94.52,222.41 "
+       points="94.52,222.41 207.16,238.6 "
        style="fill:#ffa500;fill-opacity:0.1;stroke:#ffa500;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon230"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="184.67,286.23 82.72,224.66 "
+       points="82.72,224.66 184.67,286.23 "
        style="fill:#ca8b44;fill-opacity:0.1;stroke:#ca8b44;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon232"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="213.3,325.65 89.96,186.56 "
+       points="89.96,186.56 213.3,325.65 "
        style="fill:#6ca6cd;fill-opacity:0.1;stroke:#6ca6cd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon234"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="84.81,281.21 203.28,224.97 "
+       points="203.28,224.97 84.81,281.21 "
        style="fill:#d45500;fill-opacity:0.1;stroke:#d45500;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon236"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="68.12,215.98 194.1,214.47 "
+       points="194.1,214.47 68.12,215.98 "
        style="fill:#fce4a2;fill-opacity:0.1;stroke:#fce4a2;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon238"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="222.22,228.63 103.16,200.61 "
+       points="103.16,200.61 222.22,228.63 "
        style="fill:#cd3333;fill-opacity:0.1;stroke:#cd3333;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon240"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="92.11,295.32 222.08,260.59 "
+       points="222.08,260.59 92.11,295.32 "
        style="fill:#00c5cd;fill-opacity:0.1;stroke:#00c5cd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon242"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="248.48,246.12 98.47,234.86 "
+       points="98.47,234.86 248.48,246.12 "
        style="fill:#780128;fill-opacity:0.1;stroke:#780128;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon244"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="110.2,227.86 215.12,225.75 "
+       points="215.12,225.75 110.2,227.86 "
        style="fill:#dcdcdc;fill-opacity:0.1;stroke:#dcdcdc;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon246"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="235.5,294.02 77.06,208.6 "
+       points="77.06,208.6 235.5,294.02 "
        style="fill:#cd0000;fill-opacity:0.1;stroke:#cd0000;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon248"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="298.15,228.15 164.74,187.68 "
+       points="164.74,187.68 298.15,228.15 "
        style="fill:#5c3a1a;fill-opacity:0.1;stroke:#5c3a1a;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon250"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="241.39,233.97 116.52,184.15 "
+       points="116.52,184.15 241.39,233.97 "
        style="fill:#483d8b;fill-opacity:0.1;stroke:#483d8b;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon252"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="193.6,217.13 95.47,175.45 "
+       points="95.47,175.45 193.6,217.13 "
        style="fill:#e3bfcd;fill-opacity:0.1;stroke:#e3bfcd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon254"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="203.51,208.83 93.22,179.02 "
+       points="93.22,179.02 203.51,208.83 "
        style="fill:#dcc5e6;fill-opacity:0.1;stroke:#dcc5e6;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon256"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="171.07,250.37 97.33,220.49 "
+       points="97.33,220.49 171.07,250.37 "
        style="fill:#ffd700;fill-opacity:0.1;stroke:#ffd700;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon258"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="198.03,210.72 125.38,200.83 "
+       points="125.38,200.83 198.03,210.72 "
        style="fill:#8b8b00;fill-opacity:0.1;stroke:#8b8b00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon260"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="129.7,291.82 202.56,278.19 "
+       points="202.56,278.19 129.7,291.82 "
        style="fill:#c6f7ef;fill-opacity:0.1;stroke:#c6f7ef;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon262"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="165.15,215.37 105.4,177.28 "
+       points="105.4,177.28 165.15,215.37 "
        style="fill:#faf0e6;fill-opacity:0.1;stroke:#faf0e6;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon264"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="136.19,320.51 158.99,274.99 "
+       points="158.99,274.99 136.19,320.51 "
        style="fill:#7b856d;fill-opacity:0.1;stroke:#7b856d;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon266"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
     <polygon
-       points="163.66,226.47 73.31,189.54 "
+       points="73.31,189.54 163.66,226.47 "
        style="fill:#66cd00;fill-opacity:0.1;stroke:#66cd00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon268"
        transform="matrix(1.2299548,0,0,1.2299548,165.38047,817.63077)" />
@@ -43588,132 +43588,132 @@
        style="fill:none;stroke:#fce4a2;stroke-width:0.873268;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="circle460" />
     <polygon
-       points="415.01,181.91 619.71,122.85 "
+       points="619.71,122.85 415.01,181.91 "
        style="fill:#607b8b;fill-opacity:0.1;stroke:#607b8b;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon462"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="513.14,240.63 624.8,138.28 "
+       points="624.8,138.28 513.14,240.63 "
        style="fill:#c4620c;fill-opacity:0.1;stroke:#c4620c;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon464"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="488.35,178.18 581.89,160.04 "
+       points="581.89,160.04 488.35,178.18 "
        style="fill:#9c8936;fill-opacity:0.1;stroke:#9c8936;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon466"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="567.85,169.45 427.83,58.81 "
+       points="427.83,58.81 567.85,169.45 "
        style="fill:#ad3b9c;fill-opacity:0.1;stroke:#ad3b9c;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon468"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="534.27,213.34 645.66,174.75 "
+       points="645.66,174.75 534.27,213.34 "
        style="fill:#ff6347;fill-opacity:0.1;stroke:#ff6347;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon470"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="541.91,226.94 581.72,187.66 "
+       points="581.72,187.66 541.91,226.94 "
        style="fill:#8b5a00;fill-opacity:0.1;stroke:#8b5a00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon472"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="558.32,264.37 632.2,227.06 "
+       points="632.2,227.06 558.32,264.37 "
        style="fill:#ffa500;fill-opacity:0.1;stroke:#ffa500;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon474"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="604.03,312.23 679.13,129.73 "
+       points="679.13,129.73 604.03,312.23 "
        style="fill:#ca8b44;fill-opacity:0.1;stroke:#ca8b44;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon476"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="481.73,207.38 664.38,159.95 "
+       points="664.38,159.95 481.73,207.38 "
        style="fill:#6ca6cd;fill-opacity:0.1;stroke:#6ca6cd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon478"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="669.42,271.51 640.53,143.7 "
+       points="640.53,143.7 669.42,271.51 "
        style="fill:#d45500;fill-opacity:0.1;stroke:#d45500;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon480"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="496.72,279.62 588.69,133 "
+       points="588.69,133 496.72,279.62 "
        style="fill:#fce4a2;fill-opacity:0.1;stroke:#fce4a2;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon482"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="514.91,211.53 575.81,171.83 "
+       points="575.81,171.83 514.91,211.53 "
        style="fill:#cd3333;fill-opacity:0.1;stroke:#cd3333;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon484"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="595.81,278.88 610.85,223.38 "
+       points="610.85,223.38 595.81,278.88 "
        style="fill:#00c5cd;fill-opacity:0.1;stroke:#00c5cd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon486"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="565.34,300.63 650.38,249.08 "
+       points="650.38,249.08 565.34,300.63 "
        style="fill:#780128;fill-opacity:0.1;stroke:#780128;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon488"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="573.22,297.79 619.98,271.74 "
+       points="619.98,271.74 573.22,297.79 "
        style="fill:#dcdcdc;fill-opacity:0.1;stroke:#dcdcdc;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon490"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="546.89,302.56 664.19,199.53 "
+       points="664.19,199.53 546.89,302.56 "
        style="fill:#cd0000;fill-opacity:0.1;stroke:#cd0000;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon492"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="523.06,71.54 607.24,37.83 "
+       points="607.24,37.83 523.06,71.54 "
        style="fill:#5c3a1a;fill-opacity:0.1;stroke:#5c3a1a;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon494"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="587.01,325.65 596.62,235.19 "
+       points="596.62,235.19 587.01,325.65 "
        style="fill:#483d8b;fill-opacity:0.1;stroke:#483d8b;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon496"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="486.72,230.44 604.87,126.01 "
+       points="604.87,126.01 486.72,230.44 "
        style="fill:#e3bfcd;fill-opacity:0.1;stroke:#e3bfcd;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon498"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="503.77,220.01 585.5,97.19 "
+       points="585.5,97.19 503.77,220.01 "
        style="fill:#dcc5e6;fill-opacity:0.1;stroke:#dcc5e6;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon500"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="575.51,256.97 574.34,223.43 "
+       points="574.34,223.43 575.51,256.97 "
        style="fill:#ffd700;fill-opacity:0.1;stroke:#ffd700;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon502"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="534.23,234.25 569.04,147.61 "
+       points="569.04,147.61 534.23,234.25 "
        style="fill:#8b8b00;fill-opacity:0.1;stroke:#8b8b00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon504"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="590.93,220.94 628.45,184.69 "
+       points="628.45,184.69 590.93,220.94 "
        style="fill:#c6f7ef;fill-opacity:0.1;stroke:#c6f7ef;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon506"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="513.39,175.27 546.8,144.13 "
+       points="546.8,144.13 513.39,175.27 "
        style="fill:#faf0e6;fill-opacity:0.1;stroke:#faf0e6;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon508"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="663.68,218.55 700.26,215.64 "
+       points="700.26,215.64 663.68,218.55 "
        style="fill:#7b856d;fill-opacity:0.1;stroke:#7b856d;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon510"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
     <polygon
-       points="524.63,301.78 612.06,146.66 "
+       points="612.06,146.66 524.63,301.78 "
        style="fill:#66cd00;fill-opacity:0.1;stroke:#66cd00;stroke-width:1.07;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10"
        id="polygon512"
        transform="matrix(1.2299548,0,0,1.2299548,-277.40376,1262.0429)" />
