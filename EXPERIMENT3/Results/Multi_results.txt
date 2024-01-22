@@ -1,7 +1,0 @@
-Threshold
-Spikein
-Extraction_contaminants
-PCR_contaminants
-Algae
-Rotifers
-Symbionts
