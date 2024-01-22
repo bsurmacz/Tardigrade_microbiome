@@ -1,0 +1,14 @@
+EXPERIMENT_1_T_B1	blank_extr
+EXPERIMENT_1_T_B2	blank_extr
+EXPERIMENT_1_T_G1	blank_algae
+EXPERIMENT_1_T_G2	blank_algae
+EXPERIMENT_1_T_Neg_PCRI_1	blank_PCR
+EXPERIMENT_1_T_Neg_PCRI_2	blank_PCR
+EXPERIMENT_1_T_r1	blank_rotifers
+EXPERIMENT_1_T_r2	blank_rotifers
+EXPERIMENT_1_TZ_blank_LB_Z	blank_extr
+EXPERIMENT_1_TZ_G1_Z	blank_algae
+EXPERIMENT_1_TZ_G2_Z	blank_algae
+EXPERIMENT_1_TZ_Neg_PCRI	blank_PCR
+EXPERIMENT_1_TZ_r1_Z	blank_rotifers
+EXPERIMENT_1_TZ_r2_Z	blank_rotifers
