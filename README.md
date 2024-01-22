@@ -91,7 +91,7 @@ sed -i 's/[dpcofgs]\://g' otus.tax
 combine_zOTU_files.py zotu_table.txt zotus.tax zotus.fasta zotu_otu_relationships.txt
 combine_OTU_files.py otu_table.txt otus.tax otus.fasta
 ```
-** The blank samples from Experiment 1 were manually duplicated and renamed to match also Experiment 2 - to allow the decontamination - because we used the same set of blanks in Experiment 1 and Experiment 2  **
+**The blank samples from Experiment 1 were manually duplicated and renamed to match also Experiment 2 - to allow the decontamination - because we used the same set of blanks in Experiment 1 and Experiment 2**
 
 ## 2. Splittinng the data from separate experiments
 For this step we need the following: 
@@ -104,27 +104,23 @@ As we wanted to run the analyses (decontamination, filtering) separately for dif
 Rscript split_otu_tables.R
 ```
 
-## 3. Decontamination and splitting the data from each experiment
+## 3. Decontamination 
 For this step we need the following: 
 - Python 3.7.8
-- custom decontamination script: *decontaminate.py*
-- csv files with blanks used in each experiment 
+- custom decontamination script: *decontaminate.py* 
+- csv files with blanks used in each experiment
+- the file SPIKEIN.txt: containing "Ec5502_16S	Extr_Spikein" (the name of the spikein used) or an empty file NOSPIKEIN.txt
 
-As some of the blanks overlapped 
-
-
-### decontamination
-
-To decontaminate the data from the each experiment separately, we call *decontaminate.py* for each experment separately
+To decontaminate the datasets, we call *decontaminate.py* for each experment separately
 ```
-python3 decontaminate.py zotu_table_experiment_1.txt BLANK_LIST_EXPERIMENT_1.txt otus.tax 10 0 100
-python3 decontaminate.py zotu_table_experiment_2.txt BLANK_LIST_EXPERIMENT_2.txt otus.tax 10 0 100
-python3 decontaminate.py zotu_table_experiment_3.txt BLANK_LIST_EXPERIMENT_3.txt SPIKEIN otus.tax 10 0 100
-python3 decontaminate.py zotu_table_experiment_4.txt BLANK_LIST_EXPERIMENT_4.txt SPIKEIN otus.tax 10 0 100
+python3 decontaminate.py zotu_table_experiment_1.txt BLANK_LIST_EXPERIMENT_1.txt NOSPIKEIN.txt otus.tax 10 0 100
+python3 decontaminate.py zotu_table_experiment_2.txt BLANK_LIST_EXPERIMENT_2.txt NOSPIKEIN.txt otus.tax 10 0 100
+python3 decontaminate.py zotu_table_experiment_3.txt BLANK_LIST_EXPERIMENT_3.txt SPIKEIN.txt otus.tax 10 0 100
+python3 decontaminate.py zotu_table_experiment_4.txt BLANK_LIST_EXPERIMENT_4.txt SPIKEIN.txt otus.tax 10 0 100
 
 ```
 
-The outputs of this script are, for each experiment:
+The outputs of this script are for each experiment:
 - **Table_with_classes.txt** - where every zOTU is assigned to Symbiont, Other, PCR or Extraction Contaminant and PCR or Extraction Spikein class
 - **Statistics_table.txt** - with statistics about every library composition in terms of e.g contamination or spikein percentage 
 - **Decontaminated_zOTU_table.txt** - where all contaminants and spikeins are deleted, as well as libraries that sum of those were higher than ThresholdC
