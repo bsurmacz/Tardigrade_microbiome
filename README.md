@@ -2,7 +2,7 @@
  
  
 
-#### This repository contains the complete pipelines for the analysis and visualization of 16S rRNA V4 amplicon sequencing data for the analysis of tardigrade microbiome and re-analysis of data from other tardigrade microbiome studies.  Libraries were sequenced across three 2 x 300 bp Illumina MiSeq lanes
+#### This repository contains the complete pipelines for the analysis and visualization of 16S rRNA V4 amplicon sequencing data for the analysis of tardigrade microbiome and re-analysis of data from other tardigrade microbiome studies.  Libraries were sequenced across three 2 x 300 bp Illumina MiSeq lanes. All custom scripts are stored in the directory *scripts*.
 
 
 ### The study design included 4 experiments:
