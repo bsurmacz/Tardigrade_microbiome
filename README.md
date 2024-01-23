@@ -93,7 +93,7 @@ combine_OTU_files.py otu_table.txt otus.tax otus.fasta
 ```
 **The blank samples from Experiment 1 were manually duplicated and renamed to match also Experiment 2 - to allow the decontamination - because we used the same set of blanks in Experiment 1 and Experiment 2**
 
-## 2. Splittinng the data from separate experiments
+## 2. Splitting the data from separate experiments
 For this step we need the following: 
 - R 4.3.2
 - custom script *split_otu_tables.R*
