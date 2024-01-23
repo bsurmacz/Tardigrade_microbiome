@@ -13,7 +13,7 @@
 
 
 ## Starting data:
-.fastq files with named with experiment-speciffic prefix, eg., EXPERIMENT1_sample1.fastq, EXPERIMENT2_sample1.fastq, etc..
+.fastq files with named with experiment-speciffic prefix, eg., EXPERIMENT1_samplename1_R1.fastq, EXPERIMENT1_samplename1_R2.fastq,  EXPERIMENT2_samplename1_R1.fastq, EXPERIMENT2_samplename1_R2.fastq, etc.
 
 The workflow comprised 3 distinct steps. They are listed below, and either discussed in more details, or linked to further down.
 1. Basic analysis of the amplicon data: filtering, denoising, OTU picking (on merged dataset - to maintain OTU IDs for the whole study)
